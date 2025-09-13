@@ -40,6 +40,10 @@ width: 88%;
 display:grid;
 grid-template-columns: repeat(3,1fr);
 grid-column-gap: 20px;
+@media screen and (max-width: 500px){
+   grid-template-columns: repeat(1, 1fr);
+   grid-row-gap: 20px;
+}
 `
 
 const SearchComp = styled.div`
@@ -51,13 +55,19 @@ display: flex;
 justify-content: center;
 align-items: center;
 border: 1px solid lightgray;
+@media screen and (max-width: 500px){
+   height: auto;
+   padding: 20px 0;
+}
 `
 
 const Wrapper = styled.div`
 width: 77%;
 display:flex;
 justify-content: center;
-
+@media screen and (max-width: 700px){
+    width: 90%;
+}
 `
 
 

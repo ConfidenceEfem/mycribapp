@@ -35,7 +35,10 @@ font-size: 14px;
   outline: none;
   border: none;
 }
-
+  @media screen and (max-width: 500px){
+width: 150px;
+font-size: 13px;
+}
 `
 
 const Text = styled.span`

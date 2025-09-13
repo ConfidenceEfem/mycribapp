@@ -3,6 +3,8 @@ import { colors } from '../config/colors'
 import img from "../assets/logo.png"
 import Button from './Button'
 import {NavLink, useNavigate} from "react-router"
+import MenuIcon from '@mui/icons-material/Menu';
+// import {} from "@mui/icons-material"
 
 const Header = () => {
   const navigate = useNavigate();
@@ -24,12 +26,22 @@ const Header = () => {
                 navigate("/login")
                }} />
             </Right>
+            <Hamburger>
+                <MenuIcon style={{color: colors?.primary}}/>
+            </Hamburger>
         </Wrapper>
     </Container>
   )
 }
 
 export default Header
+
+const Hamburger = styled.div`
+display:none;
+@media screen and (max-width: 800px){
+    display:flex;
+}
+`
 
 const Nav = styled(NavLink)`
 cursor: pointer;
@@ -39,17 +51,26 @@ color: ${colors.primary};
 
 const Logo = styled.img`
 height: 80px;
+@media screen and (max-width: 500px){
+height: 60px;
+}
 `
 
 const Navs = styled.div`
 display:flex;
 align-items: center;
 gap: 20px;
+@media screen and (max-width: 800px){
+    display:none;
+}
 `
 const Right = styled.div`
 display:flex;
 align-items: center;
 gap: 20px;
+@media screen and (max-width: 800px){
+    display:none;
+}
 `
 
 const Left = styled.div`
@@ -57,12 +78,18 @@ display:flex;
 align-items: center;
 gap: 30px;
 flex:1;
+
+/* @media screen and (max-width: 1200px){
+    flex: none;
+    margin-right: 30px;
+} */
 `
 
 const Wrapper = styled.div`
 width: 90%;
 display:flex;
 align-items: center;
+
 `
 
 const Container = styled.div`

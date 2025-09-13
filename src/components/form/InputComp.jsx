@@ -14,5 +14,7 @@ const Input = styled.input`
   /* padding: 5px 12px; */
   font-family: "montserrat";
   outline: none;
-  /* border-radius: 5px; */
+  @media screen and (max-width: 500px){
+font-size: 13px;
+}
 `;
