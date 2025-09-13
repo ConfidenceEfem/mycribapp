@@ -8,6 +8,7 @@ import Login from './pages/Login'
 import VerifyAccount from './pages/VerifyAccount'
 import {BrowserRouter, Routes, Route} from "react-router"
 import ScrollToTop from './components/ScrollToTop'
+import Dashboard from './pages/Dashboard'
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
           <Route path="/verify-account" element={<VerifyAccount />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </Container>
     </BrowserRouter>

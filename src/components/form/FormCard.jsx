@@ -3,7 +3,7 @@ import { colors } from "../../config/colors";
 import ContentComp from "./ContentComp";
 import React from "react"
 
-const FormCard = ({ children, title, subText, reRouteCaption, reRouteLabel  }) => {
+const FormCard = ({ children, title, subText, reRouteCaption, reRouteLabel,reRouteFunction  }) => {
   return (
      <Card>
           <CardWrapper>
@@ -12,6 +12,8 @@ const FormCard = ({ children, title, subText, reRouteCaption, reRouteLabel  }) =
             subText={subText}
             reRouteCaption={reRouteCaption}
             reRouteLabel={reRouteLabel}
+            reRouteFunction={reRouteFunction}
+        
             />
        
           

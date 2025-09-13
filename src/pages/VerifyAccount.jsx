@@ -6,13 +6,36 @@ import * as yup from "yup";
 import { Formik } from "formik";
 import React from "react";
 import ErrorMessage from "../components/form/ErrorMessage";
+import {useAuthStore} from "../store/useAuthStore"
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router";
 
 const VerifyAccount = () => {
+
+  const navigate = useNavigate()
+
+const {isResendingOTP, resendOTP, isVerifyingAccount, verifyAccount, authUser} = useAuthStore()
+
   const [isShowPassword, setIsShowPassword] = React.useState(false);
 
   const schema = yup.object().shape({
-    otpCode: yup.string().required("OTP Code is required"),
+    otp: yup.string().min(6).max(6).required("OTP Code is required"),
   });
+
+  const handleVerifyAccount = async (e) => {  
+  const success =   await verifyAccount(e)
+  if(success){
+
+       Swal.fire({
+             showConfirmButton: false,
+             icon: 'success',
+             title: 'Account verified successfully',
+             text: 'You can now login to your account',
+             timer: 3000
+           }).then(()=>{
+             navigate("/dashboard",{replace: true})
+           }) 
+  }}
 
   return (
     <Container>
@@ -23,15 +46,30 @@ const VerifyAccount = () => {
             "Enter the 6-digit code we sent to your email to verify your account."
           }
           reRouteCaption={"Didn't get a code?"}
-          reRouteLabel={"Resend Code"}
+          reRouteLabel={isResendingOTP? "Resending...": "Resend Code"}
+          reRouteFunction={()=>{
+            resendOTP({
+              email: authUser?.email
+            }).then(()=> {
+              Swal.fire({
+                icon: "success",
+              title : "OTP Resent",
+              text: "Please check your email for the new OTP code",
+              timer: 3000,
+              showConfirmButton: false,
+              })
+            })
+          }}
         >
           <Formik
             initialValues={{
-              otpCode: "",
+              otp: "",
+              email: authUser?.email
             }}
             validationSchema={schema}
             onSubmit={(e)=>{
               console.log(e, "otp code submitted")
+              handleVerifyAccount(e)
             }}
           >
             {({ errors, setFieldTouched, touched, handleChange, handleSubmit }) => (
@@ -40,8 +78,8 @@ const VerifyAccount = () => {
               >
                 <Div>
                   <ErrorMessage
-                    error={errors?.otpCode}
-                    visible={touched?.otpCode}
+                    error={errors?.otp}
+                    visible={touched?.otp}
                   />
                   <InputField
                     placeholder="OTP Code"
@@ -51,12 +89,12 @@ const VerifyAccount = () => {
                       setIsShowPassword(!isShowPassword);
                     }}
                     onBlur={() => {
-                      setFieldTouched("otpCode");
+                      setFieldTouched("otp");
                     }}
-                    onChange={handleChange("otpCode")}
+                    onChange={handleChange("otp")}
                   />
                 </Div>
-                <Button text={"Verify Account"} />
+                <Button text={isVerifyingAccount? "Loading...": "Verify Account"} disabled={isVerifyingAccount}/>
               </Form>
             )}
           </Formik>

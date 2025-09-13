@@ -1,13 +1,19 @@
 import styled from "styled-components"
 import { colors } from "../../config/colors";
+import {NavLink, useNavigate} from "react-router"
  
-const ContentComp = ({title, subText, reRouteCaption, reRouteLink, reRouteLabel}) => {
+const ContentComp = ({title, subText, reRouteCaption, reRouteFunction, reRouteLabel}) => {
+
+  const navigate = useNavigate()
+
   return (
     <Content>
               <Title>{title}</Title>
               <SubText>
                 {subText}{" "}
-                 {reRouteCaption} <Label>{reRouteLabel}</Label>
+                 {reRouteCaption} <Label 
+                 onClick={reRouteFunction}
+                 >{reRouteLabel}</Label>
               </SubText>
             </Content>
   )
@@ -25,6 +31,8 @@ gap: 15px;
 
 const Label = styled.label`
 color: ${colors.primary};
+text-decoration: none;
+cursor: pointer;
 `
 
 const SubText = styled.div`

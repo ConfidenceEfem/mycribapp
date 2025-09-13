@@ -1,11 +1,99 @@
-import {create} from "zustand"
+import { create } from "zustand";
+import { axiosInstance } from "../lib/axios";
+import {useNavigate} from "react-router"
+import { getErrorMessage } from "../lib/errorHandler";
+import Swal from "sweetalert2"
 
-const useAuthStore = create((set) => ({
-    user: null,
-    token: null,    
-    setUser: (user) => set({ user }),
-    setToken: (token) => set({ token }),
-    clearAuth: () => set({ user: null, token: null }),
+const navigate = useNavigate
+
+export const useAuthStore = create((set) => ({
+  userName: "Confidence",
+  lastName: "Efem",
+  isSigningUp: false,
+  isLogingin: false,
+  isVerifyingAccount: false,
+  isResendingOTP: false,
+  authUser: null,
+
+  signup: async (data) => {
+    set({ isSigningUp: true });
+    try {
+      const res = await axiosInstance.post("/auth/signup", data);
+      console.log(res?.data, "sign up data");
+      set({ authUser: res?.data?.data});
+      return true
+    
+    } catch (error) {
+      console.log("error while signing up", error, getErrorMessage(error));
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: getErrorMessage(error),
+        timer: 3000,
+        showConfirmButton: false,
+      })
+    } finally {
+      set({ isSigningUp: false });
+    }
+  },
+  login: async (data) => {
+    set({ isLogingin: true });
+    try {
+      const res = await axiosInstance.post("/auth/login", data);
+      console.log(res?.data, "loging data");
+      set({ authUser: res?.data?.data });
+      return {status: true, isEmailVerified: res?.data?.data?.isEmailVerified}
+    } catch (error) {
+      console.log("error while signing up", error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: getErrorMessage(error),
+        timer: 3000,
+        showConfirmButton: false,
+      })
+    } finally {
+      set({ isLogingin: false });
+    }
+  },
+  verifyAccount: async (data) => {
+    set({ isVerifyingAccount: true });
+    try {
+      const res = await axiosInstance.post("/auth/verify-account", data);
+      console.log(res?.data, "verify account data");
+      set({ authUser: res?.data?.data });
+      return true
+    } catch (error) {
+      console.log("error while verifying account up", error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: getErrorMessage(error),
+        timer: 3000,
+        showConfirmButton: false,
+      })
+    } finally {
+      set({ isVerifyingAccount: false });
+    }
+  },
+  resendOTP: async (data) => {
+    set({ isResendingOTP: true });
+    try {
+      const res = await axiosInstance.post("/auth/resend-otp", data);
+      console.log(res?.data, "resend otp data");
+      set({ authUser: res?.data?.data });
+      return true
+    } catch (error) {
+      console.log("error while sending otp", error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: getErrorMessage(error),
+        timer: 3000,
+        showConfirmButton: false,
+      })
+    } finally {
+      set({ isResendingOTP: false });
+    }
+  },
 }));
-
-export default useAuthStore;

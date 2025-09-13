@@ -6,8 +6,16 @@ import React from "react";
 import * as yup from "yup";
 import { Formik } from "formik";
 import ErrorMessage from "../components/form/ErrorMessage";
+import {useNavigate} from "react-router"
+import { useAuthStore } from "../store/useAuthStore";
+import Swal from "sweetalert2";
 
 const Login = () => {
+
+  const navigate = useNavigate()
+
+  const {login, isLogingin, authUser} = useAuthStore()
+
   const [isShowPassword, setIsShowPassword] = React.useState(false);
 
   const schema = yup.object().shape({
@@ -17,6 +25,35 @@ const Login = () => {
       .min(6, "Password must be at least 6 characters")
       .required("Password is required"),
   });
+
+  const handleLogin = async (e) => {  
+    const success = await login(e)
+    console.log("check loging status", success, authUser)
+    if(success?.status){
+    if(success?.isEmailVerified){
+      Swal.fire({
+        icon: "success",
+        title: "Login Successful",
+        text: "Welcome back!",
+        showConfirmButton: false,
+        timer: 3000
+      }).then(()=>{
+        navigate("/dashboard",{replace: true})
+      })
+    }else{
+      Swal.fire({
+        icon: "info",
+        title: "Email not verified",
+        text: "OTP sent to your mail. Please verify your email to continue",
+        showConfirmButton: false,
+        timer: 3000
+      }).then(()=>{
+        navigate("/verify-account",{replace: true})
+      })
+    }
+      // navigate("/dashboard",{replace: true})
+    }
+  }
 
   return (
     <Container>
@@ -28,12 +65,16 @@ const Login = () => {
           }
           reRouteCaption={"Don't have an account?"}
           reRouteLabel={"Sign Up"}
+          reRouteFunction={() => {
+            navigate("/signup")
+          }}
         >
           <Formik
             validationSchema={schema}
             initialValues={{ email: "", password: "" }}
             onSubmit={(e) => {
               console.log("Form Submitted", e);
+              handleLogin(e)
             }}
           >
             {({ errors, handleChange, handleSubmit, touched, setFieldTouched }) => (
@@ -70,7 +111,7 @@ const Login = () => {
                   />
                 </Div>
 
-                <Button text={"Login"} />
+                <Button text={isLogingin? "Loading...": "Login"} disabled={isLogingin} />
               </Form>
             )}
           </Formik>

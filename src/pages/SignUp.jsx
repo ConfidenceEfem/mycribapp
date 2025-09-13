@@ -7,8 +7,16 @@ import { Formik } from "formik";
 import React from "react";
 import ErrorMessage from "../components/form/ErrorMessage";
 import { colors } from "../config/colors";
+import {useAuthStore} from "../store/useAuthStore"
+import { useNavigate } from "react-router";
+import Swal from "sweetalert2";
 
 const SignUp = () => {
+
+  const navigate = useNavigate()
+
+  const {isSigningUp, signup} = useAuthStore()
+ 
   const [isShowPassword, setIsShowPassword] = React.useState(false);
 
   const schema = yup.object().shape({
@@ -23,6 +31,22 @@ const SignUp = () => {
       .required("Password is required"),
   });
 
+  const handleSignUp = async (e) => {
+    const success = await signup(e)
+    if(success){
+
+       Swal.fire({
+             showConfirmButton: false,
+             icon: 'success',
+             title: 'Account created successfully',
+             text: 'Please check your email for the OTP to verify your account',
+             timer: 3000
+           }).then(()=>{
+             navigate("/verify-account",{replace: true})
+           })
+    }
+  }
+
   return (
     <Container>
       <Wrapper>
@@ -33,6 +57,10 @@ const SignUp = () => {
           }
           reRouteCaption={"Already have an account?"}
           reRouteLabel={"Login"}
+          reRouteFunction={()=>{
+            navigate("/login")
+          }}
+          
         >
           <Formik
             initialValues={{
@@ -46,6 +74,7 @@ const SignUp = () => {
             validationSchema={schema}
             onSubmit={(e) => {
               console.log("Form Submitted", e);
+              handleSignUp(e)
             }}
           >
             {({
@@ -141,7 +170,7 @@ const SignUp = () => {
                   />
                 </Div>
 
-                <Button text={"Sign Up"} type="submit" />
+                <Button text={isSigningUp? "Loading..." : "Sign Up"} disabled={isSigningUp} type="submit" />
               </Form>
             )}
           </Formik>
@@ -163,7 +192,7 @@ width: 99%;
   border-radius: 5px;
   display:flex;
   align-items: center;
-  margin-top: 20px;
+  /* margin-top: 20px; */
   /* height: 35px; */
 `
 
