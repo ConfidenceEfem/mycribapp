@@ -30,7 +30,7 @@ const SearchOption = styled.option`
 const SearchInput = styled.select`
 height: 55px;
 border: 1px solid ${colors.primary};
-background-color: lightgray;
+background-color: white;
 padding: 0px 15px;
     font-family: "Mochiy Pop P One", sans-serif;
     color: ${colors.primary};
