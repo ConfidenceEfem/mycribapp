@@ -6,7 +6,7 @@ const Dashboard = () => {
     const {authUser} = useAuthStore()
 
   return (
-    <div style={{paddingTop: "100px"}}>This is dashboard page {authUser?.email}</div>
+    <div style={{paddingTop: "100px"}}>This is dashboard page {authUser?.firstName}{authUser?.lastName}</div>
   )
 }
 

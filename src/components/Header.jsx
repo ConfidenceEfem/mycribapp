@@ -4,12 +4,24 @@ import img from "../assets/logo.png"
 import Button from './Button'
 import {NavLink, useNavigate} from "react-router"
 import MenuIcon from '@mui/icons-material/Menu';
+import SideBar from './SideBar'
+import { useState } from 'react'
 // import {} from "@mui/icons-material"
+import avatar from "../assets/avatar.png"
 
 const Header = () => {
+
+    const [showSideBar, setShowSideBar, accessToken, authUser] = useState(false)
+
+    const onShowSideBar = () => {
+        setShowSideBar(!showSideBar)
+    }
+
   const navigate = useNavigate();
   return (
-    <Container>
+    <Div>
+        {showSideBar && <SideBar  onShowSideBar={onShowSideBar}/>}
+         <Container>
         <Wrapper>
             <Left>
                 <Logo src={img} alt="Logo" />
@@ -20,24 +32,55 @@ const Header = () => {
                     <Nav style={{color: "black"}} to={"/contact"}>Contact</Nav>
                 </Navs>
             </Left>
+            {!accessToken &&
             <Right>
-               <Nav to={"/signup"}>Sign up</Nav>
+               <Nav to={"/signup"} style={{color: colors?.primary}}>Sign up</Nav>
                <Button text="Login"  onClick={() => {
                 navigate("/login")
                }} />
-            </Right>
-            <Hamburger>
+            </Right>}
+            {
+                accessToken &&
+            <>
+            <DisplayName>Hello, {authUser?.firstName}</DisplayName>
+            <Profile src={avatar}/>
+            </>
+            }
+                <Hamburger
+            onClick={onShowSideBar}
+            >
                 <MenuIcon style={{color: colors?.primary}}/>
             </Hamburger>
+            
         </Wrapper>
     </Container>
+    </Div>
+   
   )
 }
 
 export default Header
 
+
+const Profile = styled.img`
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+border: 1px solid ${colors.primary};
+margin: 0px 20px;
+`
+
+const DisplayName = styled.div`
+font-size: 14px;
+font-weight: bold;
+`
+
+const Div = styled.div``
+
 const Hamburger = styled.div`
 display:none;
+cursor: pointer;
 @media screen and (max-width: 800px){
     display:flex;
 }
@@ -46,7 +89,7 @@ display:none;
 const Nav = styled(NavLink)`
 cursor: pointer;
 text-decoration: none;
-color: ${colors.primary};
+color: black;
 `
 
 const Logo = styled.img`
@@ -95,6 +138,7 @@ align-items: center;
 const Container = styled.div`
     width: 100%;
     height: 80px;
+    
     background-color: ${colors.white};
     display:flex;
     justify-content: center;
@@ -102,5 +146,5 @@ const Container = styled.div`
 font-family: "montserrat", sans-serif;
 font-weight: 500;
 position: fixed;
-
+z-index: 1;
 `

@@ -7,13 +7,13 @@ import Swal from "sweetalert2"
 const navigate = useNavigate
 
 export const useAuthStore = create((set) => ({
-  userName: "Confidence",
-  lastName: "Efem",
   isSigningUp: false,
   isLogingin: false,
   isVerifyingAccount: false,
   isResendingOTP: false,
   authUser: null,
+  accessToken:null,
+  refreshToken:null,
 
   signup: async (data) => {
     set({ isSigningUp: true });
@@ -42,6 +42,12 @@ export const useAuthStore = create((set) => ({
       const res = await axiosInstance.post("/auth/login", data);
       console.log(res?.data, "loging data");
       set({ authUser: res?.data?.data });
+      if(res?.data?.data?.token){
+        set({accessToken: res?.data?.data?.token?.accessToken})
+        set({refreshToken: res?.data?.data?.token?.refreshToken})
+        localStorage.setItem("accessToken", JSON.stringify(res?.data?.data?.token?.accessToken))
+        localStorage.setItem("refreshToken", JSON.stringify(res?.data?.data?.token?.refreshToken))
+      }
       return {status: true, isEmailVerified: res?.data?.data?.isEmailVerified}
     } catch (error) {
       console.log("error while signing up", error);

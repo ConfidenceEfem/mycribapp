@@ -8,7 +8,7 @@ import React from "react";
 import ErrorMessage from "../components/form/ErrorMessage";
 import {useAuthStore} from "../store/useAuthStore"
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router";
+import { Navigate, useNavigate } from "react-router";
 
 const VerifyAccount = () => {
 
@@ -29,7 +29,8 @@ const {isResendingOTP, resendOTP, isVerifyingAccount, verifyAccount, authUser} =
        Swal.fire({
              showConfirmButton: false,
              icon: 'success',
-             title: 'Account verified successfully',
+             title: 'Account verified successfully'
+             ,
              text: 'You can now login to your account',
              timer: 3000
            }).then(()=>{
@@ -38,6 +39,7 @@ const {isResendingOTP, resendOTP, isVerifyingAccount, verifyAccount, authUser} =
   }}
 
   return (
+    !authUser?.email? <Navigate to={"/login"}/> : 
     <Container>
       <Wrapper>
         <FormCard
