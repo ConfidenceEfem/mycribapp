@@ -12,7 +12,13 @@ const Hero = () => {
                 <SubText>
                     MyCrib connects student with safe, affordable and nearby accomodation. Browse verified listings, book with confidence and move in stress-free.
                 </SubText>
-                <Button text={"Sign Up"}/>
+                <Button text={"Sign Up"}
+                onClick={(e) => {
+                    e.preventDefault();
+                    window.location.href = "/signup"
+                }}
+                
+                />
             </Content>
             <Picture>
                 {/* <Frame1> */}
