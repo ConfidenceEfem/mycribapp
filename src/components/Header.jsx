@@ -8,10 +8,15 @@ import SideBar from './SideBar'
 import { useState } from 'react'
 // import {} from "@mui/icons-material"
 import avatar from "../assets/avatar.png"
+import { useAuthStore } from '../store/useAuthStore'
 
 const Header = () => {
 
-    const [showSideBar, setShowSideBar, accessToken, authUser] = useState(false)
+    const { accessToken, authUser } = useAuthStore()
+
+    const [showSideBar, setShowSideBar] = useState(false)
+
+    
 
     const onShowSideBar = () => {
         setShowSideBar(!showSideBar)
