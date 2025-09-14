@@ -192,6 +192,7 @@ width: 99%;
   border-radius: 5px;
   display:flex;
   align-items: center;
+  background-color: ${colors.white};
   /* margin-top: 20px; */
   /* height: 35px; */
 `

@@ -58,6 +58,7 @@ border-radius: 400px;
 const SubText = styled.div`
 font-family: "montserrat";
 font: 18px;
+color: black;
 @media screen and (max-width: 1050px){
     font-size: 15px;
 }
