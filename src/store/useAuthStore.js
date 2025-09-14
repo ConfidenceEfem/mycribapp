@@ -68,6 +68,12 @@ export const useAuthStore = create((set) => ({
       const res = await axiosInstance.post("/auth/verify-account", data);
       console.log(res?.data, "verify account data");
       set({ authUser: res?.data?.data });
+      if(res?.data?.data?.token){
+        set({accessToken: res?.data?.data?.token?.accessToken})
+        set({refreshToken: res?.data?.data?.token?.refreshToken})
+        localStorage.setItem("accessToken", JSON.stringify(res?.data?.data?.token?.accessToken))
+        localStorage.setItem("refreshToken", JSON.stringify(res?.data?.data?.token?.refreshToken))
+      }
       return true
     } catch (error) {
       console.log("error while verifying account up", error);
