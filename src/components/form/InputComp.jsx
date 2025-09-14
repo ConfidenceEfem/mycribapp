@@ -16,5 +16,6 @@ const Input = styled.input`
   outline: none;
   @media screen and (max-width: 500px){
 font-size: 13px;
+background-color: white;
 }
 `;
