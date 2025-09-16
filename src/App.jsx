@@ -10,6 +10,7 @@ import { BrowserRouter, Routes, Route } from "react-router";
 import ScrollToTop from "./components/ScrollToTop";
 import Dashboard from "./pages/Dashboard";
 import PrivateRoute from "./components/PrivateRoute";
+import Lodges from "./pages/Lodges";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/lodges" element={<Lodges />} />
           <Route path="/verify-account" element={<VerifyAccount />} />
           <Route
             path="/dashboard"

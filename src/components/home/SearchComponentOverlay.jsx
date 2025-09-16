@@ -73,7 +73,7 @@ justify-content: center;
 
 
 const Container = styled.div`
-padding: 60px 0;
+padding-bottom: 40px;
 width: 100%;
 /* background-color: ${colors.white}; */
 display: flex;

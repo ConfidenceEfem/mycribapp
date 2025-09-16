@@ -32,7 +32,7 @@ const Header = () => {
                 <Logo src={img} alt="Logo" />
                 <Navs>
                     <Nav style={{color: "black"}} to={"/"}>Home</Nav>
-                    <Nav style={{color: "black"}} to={"/services"}>Services</Nav>
+                    <Nav style={{color: "black"}} to={"/lodges"}>Lodges</Nav>
                     <Nav style={{color: "black"}} to={"/agent"}>Agent</Nav>
                     <Nav style={{color: "black"}} to={"/contact"}>Contact</Nav>
                 </Navs>

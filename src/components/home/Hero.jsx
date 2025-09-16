@@ -20,7 +20,7 @@ const Hero = () => {
                 
                 />
             </Content>
-            <Picture>
+            <Picture>       
                 {/* <Frame1> */}
                     <Img src={img1}/>
                     <Img src={img2}/>
@@ -147,4 +147,5 @@ const Container = styled.div`
 width: 100%;
 display:flex;
 justify-content: center;
+margin-bottom: 40px;
 `
