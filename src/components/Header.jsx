@@ -33,7 +33,7 @@ const Header = () => {
                 <Navs>
                     <Nav style={{color: "black"}} to={"/"}>Home</Nav>
                     <Nav style={{color: "black"}} to={"/lodges"}>Lodges</Nav>
-                    <Nav style={{color: "black"}} to={"/agent"}>Agent</Nav>
+                    <Nav style={{color: "black"}} to={"/agents"}>Agents</Nav>
                     <Nav style={{color: "black"}} to={"/contact"}>Contact</Nav>
                 </Navs>
             </Left>

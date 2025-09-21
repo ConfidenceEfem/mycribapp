@@ -4,10 +4,13 @@ import { colors } from "../../config/colors"
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 
-const InputField = ({placeholder,type,isShowPassword, showPassword,  ...inputProps}) => {
+const InputField = ({placeholder,type,isShowPassword, showPassword,style,  ...inputProps}) => {
   return (
-    <Container>
+    <Container
+    style={style}
+    >
         <InputComp
+        
         placeholder={placeholder}
         type={isShowPassword? "text": type}
         {...inputProps}

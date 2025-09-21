@@ -16,7 +16,7 @@ const SideBar = ({ onShowSideBar}) => {
             <NavHolder>
                 <Nav to="/" onClick={onShowSideBar}>Home</Nav>
                 <Nav to="/lodges" onClick={onShowSideBar}>Lodges</Nav>
-                <Nav to="/agent" onClick={onShowSideBar}>Agent</Nav>
+                <Nav to="/agents" onClick={onShowSideBar}>Agents</Nav>
                 <Nav to="/contact" onClick={onShowSideBar}>Contact</Nav>
                 <Nav to="/signup"
                 onClick={onShowSideBar}

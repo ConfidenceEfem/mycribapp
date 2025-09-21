@@ -7,8 +7,13 @@ import CallIcon from '@mui/icons-material/Call';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import StarRateIcon from '@mui/icons-material/StarRate';
+import {Delete, ModeEdit} from "@mui/icons-material"
+import { useNavigate } from 'react-router';
 
 const ListLodgeCard = () => {
+
+    const navigate = useNavigate()
+
   return (
     <Container>
         <ImageContainer>
@@ -69,6 +74,27 @@ const ListLodgeCard = () => {
                         <Whatsappp/>
                     </Social>
                 </SocialContainer>
+                <Div>
+                    <ActionButton>
+                    <Delete/>
+                        <label>Delete</label>
+
+                    </ActionButton>
+                    <ActionButton style={{
+                        backgroundColor: "rgba(0,0,255,0.7)"
+                    }}
+                    onClick={()=>{
+                        navigate("/upload-lodges")
+                    }}
+
+                    >
+                    <ModeEdit/>
+                        <label>Edit</label>
+
+                    </ActionButton>
+                   
+                    
+                </Div>
             </RightItems>
         </DescriptionContainer>
     </Container>
@@ -76,6 +102,30 @@ const ListLodgeCard = () => {
 }
 
 export default ListLodgeCard
+
+const ActionButton = styled.div`
+display: flex;
+align-items: center;
+color: white;
+font-size: 13px;
+background-color: rgba(255,0,0,0.7);
+cursor: pointer;
+border-radius: 3px;
+padding: 5px 15px;
+:hover{
+    opacity: 0.5;
+}
+label{
+    cursor: pointer;
+}
+`
+
+const Div = styled.div`
+display:flex;
+align-items: center;
+gap: 15px;
+`
+
 const Social = styled.div`
 display:flex;
 align-items: center;
@@ -261,6 +311,7 @@ width: 240px;
 const Container = styled.div`
 /* width: calc(100% - 35px); */
 border-radius: 10px;
+font-family: "Montserrat";
 padding: 15px;
 box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 display:flex;
