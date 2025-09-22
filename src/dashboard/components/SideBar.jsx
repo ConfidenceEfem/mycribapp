@@ -75,6 +75,6 @@ const NavsHolder = styled.div`
 const Container = styled.div`
   width: 300px;
   background-color: black;
-  height: 500px;
+  height: 700px;
   /* position: sticky; */
 `;

@@ -4,19 +4,36 @@ import { AddAPhotoOutlined } from "@mui/icons-material";
 import InputField from "../components/form/InputField";
 import Button from "../components/Button";
 import { colors } from "../config/colors";
+import {Formik} from "formik"
+import { useState } from "react";
 
 const UserProfile = () => {
+
+  const [image, setImage] = useState("")
+
+  const uploadChange = (e) => {
+    const file = e.target.files[0]
+    const image = URL.createObjectURL(file)
+
+    //upload image function goes here
+
+    console.log(image)
+    setImage(image)
+  }
+  
+
   return (
     <Container>
       <Wrapper>
         <UploadAvatarCont>
-          <DisplayImg src={img} />
+          <DisplayImg src={image === ""  ? img : image} />
           <input
           type="file"
           id="pix"
           style={{
             display:"none"
           }}
+          onChange={uploadChange}
           />
           <Circle
           htmlFor="pix"
@@ -24,44 +41,71 @@ const UserProfile = () => {
             <AddAPhotoOutlined />
           </Circle>
         </UploadAvatarCont>
-        <FormHolder>
-            <InputField 
-            placeholder={"First Name"}
-            />
-            <InputField
-            placeholder={"Last Name"}
-            />
-            <InputField
-            placeholder={"Email"}
-            />
-            <InputField
-            placeholder={"Phone Number"}
-            />
-            <InputField
-            placeholder={"WhatsappLink"}
-            style={{flex: "1"}}
-      
-            
-            />
-            <InputField
-            placeholder={"User type"}
-            style={{flex: "1"}}
-            type="message"
-            />
-            <TextArea
-            placeholder={"Bio"}
-            style={{flex: "1"}}
-            type="message"
-          />
+        <Formik
+        initialValues={{
+          firstName: "",
+          lastName: "",
+          email: "",
+          phoneNumber: "",
+          whatsappLink: "",
+          userType: "",
+          bio: "",
+        }}
+        >
+          {({errors, handleSubmit})=>(
+              <FormAndButton
+              onSubmit={handleSubmit}
+              >
 
-        </FormHolder>
-        <Button text={"Update Profile"}/>
+                <FormHolder>
+                    <InputField 
+                    placeholder={"First Name"}
+                    />
+                    <InputField
+                    placeholder={"Last Name"}
+                    />
+                    <InputField
+                    placeholder={"Email"}
+                    />
+                    <InputField
+                    placeholder={"Phone Number"}
+                    />
+                    <InputField
+                    placeholder={"WhatsappLink"}
+                    style={{flex: "1"}}
+              
+                    
+                    />
+                    <InputField
+                    placeholder={"User type"}
+                    style={{flex: "1"}}
+                    type="message"
+                    />
+                    <TextArea
+                    placeholder={"Bio"}
+                    style={{flex: "1"}}
+                    type="message"
+                  />
+        
+                </FormHolder>
+                <Button text={"Update Profile"} type="submit"/>
+              </FormAndButton>
+          )}
+        </Formik>
+       
       </Wrapper>
     </Container>
   );
 };
 
 export default UserProfile;
+
+const FormAndButton = styled.form`
+display:flex;
+flex-direction: column;
+align-items: center;
+gap: 30px;
+`
 
 const TextArea = styled.textarea`
  grid-column: span 2;

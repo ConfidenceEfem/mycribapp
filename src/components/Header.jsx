@@ -37,7 +37,7 @@ const Header = () => {
                     <Nav style={{color: "black"}} to={"/contact"}>Contact</Nav>
                 </Navs>
             </Left>
-            {!accessToken &&
+            {accessToken &&
             <Right>
                <Nav to={"/signup"} style={{color: colors?.primary}}>Sign up</Nav>
                <Button text="Login"  onClick={() => {
@@ -45,10 +45,12 @@ const Header = () => {
                }} />
             </Right>}
             {
-                accessToken &&
+                !accessToken &&
             <>
             <DisplayName>Hello, {authUser?.firstName}</DisplayName>
-            <Profile src={avatar}/>
+            <Profile src={avatar} onClick={()=>{
+                navigate("/user-profile")
+            }}/>
             </>
             }
                 <Hamburger

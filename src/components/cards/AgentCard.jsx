@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router"
 import img from "../../assets/avatar.png"
 import { colors } from "../../config/colors"
 import Button from '../Button'
@@ -5,8 +6,15 @@ import {VerifiedRounded,WhatsApp, Phone,} from "@mui/icons-material"
 import styled from "styled-components"
 
 const AgentCard = () => {
+
+    const navigate = useNavigate()
+
   return (
-    <Container>
+    <Container
+    onClick={()=>{
+        navigate("i")
+    }}
+    >
            <Profile src={img}/>
            <Top>
                <Verified>

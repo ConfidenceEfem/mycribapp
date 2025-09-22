@@ -4,6 +4,7 @@ import { colors } from "../config/colors";
 import Whatsappp from "@mui/icons-material/WhatsApp";
 import CallIcon from "@mui/icons-material/Call";
 import ListLodgeCard from "../components/cards/ListLodgeCard";
+import GoBack from "../dashboard/components/GoBack";
 
 const AgentDetailedProfile = () => {
   const details = [
@@ -29,6 +30,11 @@ const AgentDetailedProfile = () => {
   return (
     <Container>
       <Wrapper>
+        <GoBack
+        style={{
+          alignSelf: "flex-start"
+        }}
+        />
         <UserProfileHolder>
           <LeftDetails>
             <DetailsHolder>

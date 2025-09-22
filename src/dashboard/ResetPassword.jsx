@@ -3,11 +3,13 @@ import styled from "styled-components"
 import InputField from '../components/form/InputField'
 import Button from '../components/Button'
 import ErrorMessage from '../components/form/ErrorMessage'
+import GoBack from './components/GoBack'
 
 const ResetPassword = () => {
   return (
     <Container>
         <Wrapper>
+          <GoBack/>
             <FormHolder>
                 <Div>
                 <ErrorMessage/>
@@ -54,6 +56,8 @@ const Wrapper = styled.div`
   display: flex;
  
   width: 88%;
+  flex-direction: column;
+  gap: 40px;
 `;
 
 const Container = styled.div`

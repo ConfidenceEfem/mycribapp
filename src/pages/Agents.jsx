@@ -1,8 +1,12 @@
 import styled from "styled-components";
 
 import AgentCard from "../components/cards/AgentCard";
+import { useNavigate } from "react-router";
 
 const Agents = () => {
+
+  const navigate = useNavigate()
+
   return (
     <Container>
       <Wrapper>

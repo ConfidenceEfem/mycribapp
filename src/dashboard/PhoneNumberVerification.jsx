@@ -2,8 +2,13 @@ import styled from "styled-components"
 import InputField from "../components/form/InputField";
 import Button from "../components/Button";
 import GoBack from "./components/GoBack";
+import { useNavigate } from "react-router";
 
 const PhoneNumberVerification = () => {
+
+  const navigate = useNavigate()
+
+
   return (
     <Container>
         <Wrapper>
@@ -18,7 +23,7 @@ const PhoneNumberVerification = () => {
                 placeholder={"OTP Code"}
                 type={"Number"}
                 />
-                <Button text={"Verify Phone Number"}/>
+                <Button text={"Verify Number"}/>
             </FormHolder>
         </Wrapper>
     </Container>
