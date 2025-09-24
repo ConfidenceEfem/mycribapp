@@ -38,7 +38,7 @@ const Login = () => {
         showConfirmButton: false,
         timer: 3000
       }).then(()=>{
-        navigate("/dashboard",{replace: true})
+        navigate("/user-profile",{replace: true})
       })
     }else{
       Swal.fire({

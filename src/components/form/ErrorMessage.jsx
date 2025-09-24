@@ -3,7 +3,7 @@ import styled from "styled-components"
 const ErrorMessage = ({error, visible}) => {
     if (!error || !visible) return null;
   return (
-    <Text>{error}fff </Text>
+    <Text>{error}</Text>
   )
 }
 

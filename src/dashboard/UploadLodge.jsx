@@ -11,8 +11,13 @@ import {} from "@mui/material/Select";
 import { colors } from "../config/colors";
 import { Formik } from "formik";
 import ErrorMessage from "../components/form/ErrorMessage";
+import * as yup from "yup";
+import { useAuthStore } from "../store/useAuthStore";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const UploadLodge = () => {
+  const { createNewLodge, isNewLodgeCreating } = useAuthStore();
+
   const [isCheckWithRoomate, setIsCheckWithRoomate] = useState(false);
   const [images, setImages] = useState([]);
 
@@ -30,7 +35,29 @@ const UploadLodge = () => {
     setImages(removeImages);
   };
 
-  console.log(images, "images");
+  const createNewLodgeFunction = async (data) => {
+    const formData = new FormData();
+
+    const { title, description, price, typeOfLodge, location } = data;
+
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("price", price);
+    formData.append("typeOfLodge", typeOfLodge);
+    formData.append("location", location);
+    //qualities form data
+    //images form data
+
+    await createNewLodge(formData);
+  };
+
+  const schema = yup.object().shape({
+    title: yup.string().required().label("Title"),
+    description: yup.string().required().label("Description"),
+    price: yup.number().required().label("Price"),
+    typeOfLodge: yup.string().required().label("Type of Lodge"),
+    location: yup.string().required().label("Location"),
+  });
 
   return (
     <Container>
@@ -69,35 +96,72 @@ const UploadLodge = () => {
           </DisplayImages>
         </UploadPicsCont>
         <Formik
-        initialValues={{
-          title: "",
-          price: "",
-          location: "",
-          withRoomate: isCheckWithRoomate,
-          noOfRoomate: 0,
-          typeOfLodge: "",
-          qualities: [],
-          bio: ""
-        }}
+          initialValues={{
+            title: "",
+            price: "",
+            location: "",
+            withRoomate: isCheckWithRoomate,
+            noOfRoomate: 0,
+            typeOfLodge: "",
+            qualities: [],
+            bio: "",
+            description: "",
+          }}
+          onSubmit={(data) => {
+            createNewLodge(data);
+          }}
+          validationSchema={schema}
         >
-          {({ handleSubmit, handleChange, touched, visible }) => (
+          {({
+            handleSubmit,
+            handleChange,
+            touched,
+            visible,
+            errors,
+            setFieldTouched,
+          }) => (
             <FormAndButton onSubmit={handleSubmit}>
               <FormHolder>
                 <Div>
-                  <InputField placeholder={"Title"} 
-                  onChange={handleChange("title")}
+                  <ErrorMessage
+                    error={errors?.title}
+                    visible={touched?.title}
                   />
-             
+
+                  <InputField
+                    placeholder={"Title"}
+                    onChange={handleChange("title")}
+                    onBlur={() => {
+                      setFieldTouched("title");
+                    }}
+                  />
                 </Div>
                 <Div>
-                  <InputField placeholder={"Price"} type={"Number"} />
-                  <ErrorMessage />
+                  <ErrorMessage
+                    error={errors?.price}
+                    visible={touched?.price}
+                  />
+                  <InputField
+                    placeholder={"Price"}
+                    type={"Number"}
+                    onChange={handleChange("price")}
+                    onBlur={() => {
+                      setFieldTouched("price");
+                    }}
+                  />
                 </Div>
                 <Div>
+                  <ErrorMessage
+                    error={errors?.location}
+                    visible={touched?.location}
+                  />
                   <InputField
                     placeholder={"Location(eg. UpSchool/Aguawka/Amansea)"}
+                    onChange={handleChange("location")}
+                    onBlur={() => {
+                      setFieldTouched("location");
+                    }}
                   />
-                  <ErrorMessage />
                 </Div>
                 <Div>
                   <Label>
@@ -115,32 +179,58 @@ const UploadLodge = () => {
                     type={"Number"}
                     disabled={!isCheckWithRoomate}
                   />
-               
                 </Div>
                 <Div>
-
-                <InputField
-                  placeholder={"Type of Lodge(eg. 1 Room self Contain)"}
-                />
-                <ErrorMessage/>
+                  <ErrorMessage
+                    error={errors?.typeOfLodge}
+                    visible={touched?.typeOfLodge}
+                  />
+                  <InputField
+                    placeholder={"Type of Lodge(eg. 1 Room self Contain)"}
+                    onChange={handleChange("typeOfLodge")}
+                    onBlur={() => {
+                      setFieldTouched("typeOfLodge");
+                    }}
+                  />
                 </Div>
                 <Div>
-                  <Label>Qualities of the Lodge?</Label>
+                  <Label>
+                    Qualities of the Lodge?
+                    <ErrorMessage
+                      error={errors?.qualities}
+                      visible={touched?.qualities}
+                    />
+                  </Label>
 
                   <InputField
                     placeholder={"24hr Electricity/Security e.t.c"}
                     type={"Number"}
-                    disabled={!isCheckWithRoomate}
+                    onChange={handleChange("qualities")}
+                    onBlur={() => {
+                      setFieldTouched("qualities");
+                    }}
                   />
-                  <ErrorMessage />
                 </Div>
                 <TextArea
-                  placeholder={"Bio"}
+                  placeholder={"Description"}
                   style={{ flex: "1" }}
                   type="message"
                 />
               </FormHolder>
-              <Button text={"Upload Lodge"} type="submit" />
+              <Button
+                text={
+                  isNewLodgeCreating ? (
+                    <CircularProgress
+                      enableTrackSlot
+                      size="20px"
+                      color="inherit"
+                    />
+                  ) : (
+                    "Upload Lodge"
+                  )
+                }
+                type="submit"
+              />
             </FormAndButton>
           )}
         </Formik>
@@ -215,6 +305,12 @@ const DisplayImages = styled.div`
 const Label = styled.div`
   font-size: 14px;
   font-family: "montserrat";
+  display: flex;
+  flex-wrap: nowrap;
+  div {
+    display: flex;
+    flex-wrap: nowrap;
+  }
 `;
 
 const Circle = styled.div`
