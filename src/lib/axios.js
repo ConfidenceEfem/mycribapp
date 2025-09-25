@@ -4,12 +4,12 @@ const baseUrl = "http://localhost:5000/api"
 const mainUrl = "https://mycribserver.onrender.com/api"
 
 export const axiosInstance = axios.create({
-    baseURL: baseUrl
+    baseURL: mainUrl
 })
 
 export const axiosWithToken = (token) =>
   axios.create({
-    baseURL: baseUrl,
+    baseURL: mainUrl,
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -18,7 +18,7 @@ export const axiosWithToken = (token) =>
   
   export const axiosWithTokenFormData = (token) =>
   axios.create({
-    baseURL: baseUrl,
+    baseURL: mainUrl,
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "multipart/form-data",

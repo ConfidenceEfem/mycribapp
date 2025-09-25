@@ -8,20 +8,14 @@ const MyLodgs = () => {
   const allLodgesByUser = useAuthStore((state) => state.allLodgesByUser);
   const isLoadingListings = useAuthStore((state) => state.isLoadingListings)
 
-useEffect(async ()=>{
- allLodgesByUser()
-}, [allLodgesByUser])
+// useEffect(async ()=>{
+//  allLodgesByUser()
+// }, [allLodgesByUser])
 
   return (
     <Container>
       <Wrapper>
-        {isLoadingListings ? (
-          <CircularProgress enableTrackSlot size="20px"  />
-        ) : (
-          userListing?.map((lodge) => (
-            <ListLodgeCard  />
-          ))
-        )}
+       <ListLodgeCard/>
       </Wrapper>
     </Container>
   );

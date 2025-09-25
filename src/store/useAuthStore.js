@@ -203,7 +203,7 @@ export const useAuthStore = create(
           set({userListing: []})
           return []
         }
-          console.log(res?.data, "all lodges by user");
+          console.log(res?.data?.data, "all lodges by user");
           set({userListing: res?.data?.data})
           return res?.data
         } catch (error) {
