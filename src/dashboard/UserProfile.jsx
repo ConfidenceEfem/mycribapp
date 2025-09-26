@@ -6,7 +6,7 @@ import Button from "../components/Button";
 import { colors } from "../config/colors";
 import { Formik } from "formik";
 import { useAuthStore } from "../store/useAuthStore";
-import CircularProgress from "@mui/material/CircularProgress";
+import CircularProgressComp from "../components/form/CircularProgressComp";
 
 const UserProfile = () => {
   const {
@@ -113,11 +113,7 @@ const UserProfile = () => {
               <Button
                 text={
                   isUserUpdatingData ? (
-                    <CircularProgress
-                      enableTrackSlot
-                      size="20px"
-                      color="inherit"
-                    />
+                       <CircularProgressComp/>
                   ) : (
                     "Update Profile"
                   )
@@ -126,6 +122,7 @@ const UserProfile = () => {
                 disabled={isUserUpdatingData}
               />
             </FormAndButton>
+         
           )}
         </Formik>
       </Wrapper>
@@ -160,11 +157,14 @@ const FormAndButton = styled.form`
   flex-direction: column;
   align-items: center;
   gap: 30px;
+  @media screen and (max-width: 800px) {
+    width: 100%;
+  }
 `;
 
 const TextArea = styled.textarea`
   grid-column: span 2;
-  width: 100%;
+  width: 98%;
   resize: none;
   padding: 5px;
   font-family: "montserrat";
@@ -175,10 +175,15 @@ const TextArea = styled.textarea`
 const FormHolder = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  /* background-color: green; */
   width: 650px;
   column-gap: 25px;
   row-gap: 15px;
+  @media screen and (max-width: 1000px) {
+    width: 520px;
+  }
+  @media screen and (max-width: 800px) {
+    width: 100%;
+  }
 `;
 
 const Circle = styled.label`
@@ -205,7 +210,6 @@ const DisplayImg = styled.img`
 
 const UploadAvatarCont = styled.div`
   position: relative;
-  /* margin-bottom: 30px; */
 `;
 
 const Wrapper = styled.div`
@@ -213,6 +217,10 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 30px;
+  @media screen and (max-width: 800px) {
+    width: 90%;
+    gap: 30px;
+  }
 `;
 
 const Container = styled.div`

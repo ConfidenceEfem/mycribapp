@@ -9,6 +9,7 @@ import ErrorMessage from "../components/form/ErrorMessage";
 import {useAuthStore} from "../store/useAuthStore"
 import Swal from "sweetalert2";
 import { Navigate, useNavigate } from "react-router";
+import CircularProgressComp from "../components/form/CircularProgressComp";
 
 const VerifyAccount = () => {
 
@@ -96,7 +97,7 @@ const {isResendingOTP, resendOTP, isVerifyingAccount, verifyAccount, authUser} =
                     onChange={handleChange("otp")}
                   />
                 </Div>
-                <Button text={isVerifyingAccount? "Loading...": "Verify Account"} disabled={isVerifyingAccount}/>
+                <Button text={isVerifyingAccount? <CircularProgressComp/>: "Verify Account"} disabled={isVerifyingAccount}/>
               </Form>
             )}
           </Formik>

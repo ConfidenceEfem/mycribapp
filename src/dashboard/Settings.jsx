@@ -58,9 +58,16 @@ export default Settings;
 const Desc = styled.div`
   font-family: "montserrat";
   font-size: 13px;
+  @media screen and (max-width: 500px) {
+    font-size: 11px;
+  }
 `;
 
-const Nav = styled.div``;
+const Nav = styled.div`
+@media screen and (max-width: 500px) {
+    font-size: 14px;
+  }
+`;
 
 const NavAndDesc = styled.div`
   width: 500px;
@@ -68,6 +75,10 @@ const NavAndDesc = styled.div`
   flex-direction: column;
   gap: 5px;
   cursor: pointer;
+  @media screen and (max-width: 650px) {
+    width: 90%;
+  }
+  
 `;
 
 const NavAndIcon = styled.div`

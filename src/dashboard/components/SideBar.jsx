@@ -4,6 +4,7 @@ import { colors } from "../../config/colors";
 import { NavLink } from "react-router";
 
 const SideBar = () => {
+  
   return (
     <Container>
       <NavsHolder>
@@ -76,5 +77,13 @@ const Container = styled.div`
   width: 300px;
   background-color: black;
   height: 700px;
-  /* position: sticky; */
+   @media screen and (max-width: 1100px) {
+    width: 250px;
+  }
+   @media screen and (max-width: 1000px) {
+    width: 230px;
+  }
+  @media screen and (max-width: 800px){
+    display:none;
+}
 `;

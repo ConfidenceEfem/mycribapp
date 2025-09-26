@@ -2,7 +2,6 @@ import styled from "styled-components";
 import {
   AddAPhotoOutlined,
   Cancel,
-  HandymanOutlined,
 } from "@mui/icons-material";
 import InputField from "../components/form/InputField";
 import Button from "../components/Button";
@@ -13,7 +12,7 @@ import { Formik } from "formik";
 import ErrorMessage from "../components/form/ErrorMessage";
 import * as yup from "yup";
 import { useAuthStore } from "../store/useAuthStore";
-import CircularProgress from "@mui/material/CircularProgress";
+import CircularProgressComp from "../components/form/CircularProgressComp";
 
 const UploadLodge = () => {
   const { createNewLodge, isNewLodgeCreating } = useAuthStore();
@@ -26,6 +25,7 @@ const UploadLodge = () => {
 
     const newImages = files.map((e) => ({
       preview: URL.createObjectURL(e),
+      file: e
     }));
     setImages(newImages);
   };
@@ -39,6 +39,10 @@ const UploadLodge = () => {
     const formData = new FormData();
 
     const { title, description, price, typeOfLodge, location } = data;
+
+    images?.forEach((img)=> {
+      formData.append("images", img.file)
+    })
 
     formData.append("title", title);
     formData.append("description", description);
@@ -108,7 +112,7 @@ const UploadLodge = () => {
             description: "",
           }}
           onSubmit={(data) => {
-            createNewLodge(data);
+            createNewLodgeFunction(data);
           }}
           validationSchema={schema}
         >
@@ -220,11 +224,7 @@ const UploadLodge = () => {
               <Button
                 text={
                   isNewLodgeCreating ? (
-                    <CircularProgress
-                      enableTrackSlot
-                      size="20px"
-                      color="inherit"
-                    />
+                    <CircularProgressComp/>
                   ) : (
                     "Upload Lodge"
                   )
@@ -246,6 +246,10 @@ const FormAndButton = styled.form`
   flex-direction: column;
   align-items: center;
   gap: 20px;
+
+  @media screen and (max-width: 800px) {
+    width: 90%;
+  }
 `;
 
 const Icon = styled.div`
@@ -283,10 +287,15 @@ const Div = styled.div`
 const FormHolder = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  /* background-color: green; */
   width: 650px;
   column-gap: 25px;
   row-gap: 25px;
+    @media screen and (max-width: 1000px) {
+    width: 520px;
+  }
+  @media screen and (max-width: 800px) {
+    width: 100%;
+  }
 `;
 
 const Image = styled.img`
@@ -300,6 +309,10 @@ const DisplayImages = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+
+  @media screen and (max-width: 450px) {
+    justify-content: center;
+  }
 `;
 
 const Label = styled.div`
@@ -310,6 +323,12 @@ const Label = styled.div`
   div {
     display: flex;
     flex-wrap: nowrap;
+  }
+ 
+  @media screen and (max-width: 400px) {
+   font-size: 11px;
+   text-align: center;
+   
   }
 `;
 
@@ -336,6 +355,7 @@ const UploadInput = styled.label`
   align-items: center;
   flex-direction: column;
   gap: 10px;
+  padding: 0px 10px;
 `;
 const UploadPicsCont = styled.div`
   width: 90%;
@@ -360,4 +380,8 @@ const Container = styled.div`
   justify-content: center;
   padding-top: 40px;
   padding-bottom: 40px;
+
+  @media screen and (max-width: 500px) {
+  padding-top: 20px;
+  }
 `;

@@ -7,16 +7,16 @@ import { Formik } from "formik";
 import React from "react";
 import ErrorMessage from "../components/form/ErrorMessage";
 import { colors } from "../config/colors";
-import {useAuthStore} from "../store/useAuthStore"
+import { useAuthStore } from "../store/useAuthStore";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const SignUp = () => {
+  const navigate = useNavigate();
 
-  const navigate = useNavigate()
+  const { isSigningUp, signup } = useAuthStore();
 
-  const {isSigningUp, signup} = useAuthStore()
- 
   const [isShowPassword, setIsShowPassword] = React.useState(false);
 
   const schema = yup.object().shape({
@@ -32,20 +32,19 @@ const SignUp = () => {
   });
 
   const handleSignUp = async (e) => {
-    const success = await signup(e)
-    if(success){
-
-       Swal.fire({
-             showConfirmButton: false,
-             icon: 'success',
-             title: 'Account created successfully',
-             text: 'Please check your email for the OTP to verify your account',
-             timer: 3000
-           }).then(()=>{
-             navigate("/verify-account",{replace: true})
-           })
+    const success = await signup(e);
+    if (success) {
+      Swal.fire({
+        showConfirmButton: false,
+        icon: "success",
+        title: "Account created successfully",
+        text: "Please check your email for the OTP to verify your account",
+        timer: 3000,
+      }).then(() => {
+        navigate("/verify-account", { replace: true });
+      });
     }
-  }
+  };
 
   return (
     <Container>
@@ -57,24 +56,23 @@ const SignUp = () => {
           }
           reRouteCaption={"Already have an account?"}
           reRouteLabel={"Login"}
-          reRouteFunction={()=>{
-            navigate("/login")
+          reRouteFunction={() => {
+            navigate("/login");
           }}
-          
         >
           <Formik
             initialValues={{
               firstName: "",
               lastName: "",
               email: "",
-            userType: "Student",
+              userType: "Student",
               phoneNumber: "",
               password: "",
             }}
             validationSchema={schema}
             onSubmit={(e) => {
               console.log("Form Submitted", e);
-              handleSignUp(e)
+              handleSignUp(e);
             }}
           >
             {({
@@ -129,10 +127,8 @@ const SignUp = () => {
                     error={errors?.userType}
                     visible={touched?.userType}
                   />
-                
-                  <SelectInput
-                  onChange={handleChange("userType")}
-                  >
+
+                  <SelectInput onChange={handleChange("userType")}>
                     <option value={"Student"}>Student</option>
                     <option value={"Agent"}>Agent</option>
                     <option value={"Landlord"}>Landlord</option>
@@ -170,7 +166,11 @@ const SignUp = () => {
                   />
                 </Div>
 
-                <Button text={isSigningUp? "Loading..." : "Sign Up"} disabled={isSigningUp} type="submit" />
+                <Button
+                  text={isSigningUp ? <CircularProgress /> : "Sign Up"}
+                  disabled={isSigningUp}
+                  type="submit"
+                />
               </Form>
             )}
           </Formik>
@@ -183,19 +183,19 @@ const SignUp = () => {
 export default SignUp;
 
 const SelectInput = styled.select`
-width: 99%;
+  width: 99%;
   height: 45px;
   border: 1px solid ${colors.primary};
   padding: 5px 8px;
   font-family: "montserrat";
   outline: none;
   border-radius: 5px;
-  display:flex;
+  display: flex;
   align-items: center;
   background-color: ${colors.white};
   /* margin-top: 20px; */
   /* height: 35px; */
-`
+`;
 
 const Div = styled.div`
   width: 100%;
@@ -213,7 +213,6 @@ const Wrapper = styled.div`
   width: 90%;
   display: flex;
   justify-content: center;
-
 `;
 
 const Container = styled.div`

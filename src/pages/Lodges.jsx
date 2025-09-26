@@ -2,12 +2,17 @@ import styled from 'styled-components'
 import ListLodgeCard from '../components/cards/ListLodgeCard'
 import SearchComponentOverlay from '../components/home/SearchComponentOverlay'
 import { useAuthStore } from '../store/useAuthStore'
+import { useEffect, useState } from 'react'
 
 const Lodges = () => {
 
-  const {allLodgesByUser, IsallLodgesByUser} = useAuthStore()
+  const [allLodge, setAllLodge] = useState([])
 
-  console.log(allLodgesByUser, "all lodge by a user")
+  const {isGettingAllLodge, getAllLodges} = useAuthStore()
+
+useEffect(()=>{
+// getAllLodges()
+},[])
 
   return (
     <Container>

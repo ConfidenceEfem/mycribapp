@@ -29,7 +29,11 @@ const Header = () => {
          <Container>
         <Wrapper>
             <Left>
-                <Logo src={img} alt="Logo" />
+                <Logo src={img} alt="Logo" 
+                onClick={()=>{
+                    navigate("/")
+                }}
+                />
                 <Navs>
                     <Nav style={{color: "black"}} to={"/"}>Home</Nav>
                     <Nav style={{color: "black"}} to={"/lodges"}>Lodges</Nav>
@@ -81,6 +85,10 @@ margin: 0px 20px;
 const DisplayName = styled.div`
 font-size: 14px;
 font-weight: bold;
+ 
+  @media screen and (max-width: 400px) {
+  font-size: 11px;
+  }
 `
 
 const Div = styled.div``

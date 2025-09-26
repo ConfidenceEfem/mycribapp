@@ -5,7 +5,6 @@ import {
   axiosWithToken,
   axiosWithTokenFormData,
 } from "../lib/axios";
-import { useNavigate } from "react-router";
 import { getErrorMessage } from "../lib/errorHandler";
 import Swal from "sweetalert2";
 
@@ -20,12 +19,17 @@ export const useAuthStore = create(
       authUser: null,
       accessToken: null,
       refreshToken: null,
-      userListing: null,
+      userListing: [],
+      agents: [],
+      lodges: [], 
       isNewLodgeCreating: false,
       isUserUpdatingData: false,
       isImageUploading: false,
       isallLodgesByUser: false,
       isResettingPassword: false,
+      isGettingAllLodge: false,
+      isGettingAllAgents: false,
+
 
       signup: async (data) => {
         set({ isSigningUp: true });
@@ -203,8 +207,7 @@ export const useAuthStore = create(
           set({userListing: []})
           return []
         }
-          console.log(res?.data?.data, "all lodges by user");
-          set({userListing: res?.data?.data})
+        set({userListing: res?.data?.data})
           return res?.data
         } catch (error) {
           console.log(error, "error while fetching all lodges by user");
@@ -217,6 +220,42 @@ export const useAuthStore = create(
           });
         } finally {
           set({ isallLodgesByUser: false });
+        }
+      },
+      getAllLodges: async () => {
+        try {
+          set({isGettingAllLodge: true})
+          const res = await axiosInstance.get("/listing")
+          console.log("all lodges data", res?.data)
+          return res?.data?.data
+        } catch (error) {
+            Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: getErrorMessage(error),
+            timer: 3000,
+            showConfirmButton: false,
+          });
+        }finally{
+          set({isGettingAllLodge: false})
+        }
+      },
+      getAllAgents: async () => {
+        try {
+          set({isGettingAllAgents: true})
+          const res = await axiosInstance.get("/user/agents")
+          console.log("all agents data", res?.data)
+          return res?.data?.data
+        } catch (error) {
+            Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: getErrorMessage(error),
+            timer: 3000,
+            showConfirmButton: false,
+          });
+        }finally{
+          set({isGettingAllAgents: false})
         }
       },
       resendOTP: async (data) => {

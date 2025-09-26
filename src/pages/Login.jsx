@@ -9,6 +9,7 @@ import ErrorMessage from "../components/form/ErrorMessage";
 import {useNavigate} from "react-router"
 import { useAuthStore } from "../store/useAuthStore";
 import Swal from "sweetalert2";
+import CircularProgressComp from "../components/form/CircularProgressComp";
 
 const Login = () => {
 
@@ -111,7 +112,7 @@ const Login = () => {
                   />
                 </Div>
 
-                <Button text={isLogingin? "Loading...": "Login"} disabled={isLogingin} />
+                <Button text={isLogingin? <CircularProgressComp/>: "Login"} disabled={isLogingin} />
               </Form>
             )}
           </Formik>

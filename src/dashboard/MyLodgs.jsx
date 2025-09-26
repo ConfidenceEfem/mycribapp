@@ -4,13 +4,14 @@ import { useAuthStore } from "../store/useAuthStore";
 import React, { useEffect } from "react";
 
 const MyLodgs = () => {
-  const userListing = useAuthStore((state) => state.userListing);
-  const allLodgesByUser = useAuthStore((state) => state.allLodgesByUser);
-  const isLoadingListings = useAuthStore((state) => state.isLoadingListings)
 
-// useEffect(async ()=>{
-//  allLodgesByUser()
-// }, [allLodgesByUser])
+
+  const {allLodgesByUser, userListing, isLoadingListings} = useAuthStore()
+  
+
+useEffect(async ()=>{
+ allLodgesByUser()
+}, [allLodgesByUser])
 
   return (
     <Container>
