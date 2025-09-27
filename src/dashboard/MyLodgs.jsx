@@ -2,21 +2,26 @@ import styled from "styled-components";
 import ListLodgeCard from "../components/cards/ListLodgeCard";
 import { useAuthStore } from "../store/useAuthStore";
 import React, { useEffect } from "react";
+import CircularProgressComp from "../components/form/CircularProgressComp";
 
 const MyLodgs = () => {
 
 
   const {allLodgesByUser, userListing, isLoadingListings} = useAuthStore()
+
+  console.log(userListing, "user listing from my lodges page")
   
 
-useEffect(async ()=>{
+useEffect( ()=>{
  allLodgesByUser()
 }, [allLodgesByUser])
 
   return (
     <Container>
       <Wrapper>
-       <ListLodgeCard/>
+        {
+          isLoadingListings ? <CircularProgressComp/> : userListing?.length === 0 ? <div>No lodge found</div> : userListing?.map( (item)=> <ListLodgeCard key={item._id} data={item}/>)
+        }
       </Wrapper>
     </Container>
   );

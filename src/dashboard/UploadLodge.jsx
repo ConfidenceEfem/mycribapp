@@ -208,7 +208,6 @@ const UploadLodge = () => {
 
                   <InputField
                     placeholder={"24hr Electricity/Security e.t.c"}
-                    type={"Number"}
                     onChange={handleChange("qualities")}
                     onBlur={() => {
                       setFieldTouched("qualities");
@@ -219,6 +218,7 @@ const UploadLodge = () => {
                   placeholder={"Description"}
                   style={{ flex: "1" }}
                   type="message"
+                onChange={handleChange("description")}
                 />
               </FormHolder>
               <Button

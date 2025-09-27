@@ -11,15 +11,15 @@ const Lodges = () => {
   const {isGettingAllLodge, getAllLodges} = useAuthStore()
 
 useEffect(()=>{
-// getAllLodges()
-},[])
+getAllLodges()
+},[getAllLodges])
 
   return (
     <Container>
         <SearchComponentOverlay/>
         <Wrapper>
           {
-            IsallLodgesByUser?  <CircularProgress
+            isGettingAllLodge?  <CircularProgress
                                   enableTrackSlot
                                   size="20px"
                                   color="inherit"

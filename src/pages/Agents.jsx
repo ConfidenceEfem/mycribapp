@@ -2,10 +2,18 @@ import styled from "styled-components";
 
 import AgentCard from "../components/cards/AgentCard";
 import { useNavigate } from "react-router";
+import { useEffect } from "react";
+import { useAuthStore } from "../store/useAuthStore";
 
 const Agents = () => {
 
   const navigate = useNavigate()
+
+  const {isGettingAllAgents, getAllAgents} = useAuthStore()
+
+  useEffect(()=>{
+    getAllAgents()
+  },[getAllAgents])
 
   return (
     <Container>

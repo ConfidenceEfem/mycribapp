@@ -111,8 +111,14 @@ export const useAuthStore = create(
             data
           );
           console.log(res?.data, "create new lodge data");
-          set({ authUser: res?.data?.data });
-          return true;
+          if(res){
+            Swal.fire({
+              showConfirmButton: false,
+              icon: "success",  
+              title: "Lodge Created Successfully",
+              timer: 3000,
+            });
+          }
         } catch (error) {
           console.log("error while creating new lodge", error);
           Swal.fire({
@@ -170,6 +176,7 @@ export const useAuthStore = create(
         try {
           set({ isUserUpdatingData: true });
           const token = get().accessToken;
+          console.log("my tokken", token)
           const res = await axiosWithToken(token).post(
             "/user/update-user",
             data
@@ -245,7 +252,11 @@ export const useAuthStore = create(
           set({isGettingAllAgents: true})
           const res = await axiosInstance.get("/user/agents")
           console.log("all agents data", res?.data)
-          return res?.data?.data
+          if(res?.data?.data?.length === 0) {
+            set({agents: []})
+            return []
+          }
+          set({agents: res?.data?.data})
         } catch (error) {
             Swal.fire({
             icon: "error",

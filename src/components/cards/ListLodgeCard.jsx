@@ -10,7 +10,7 @@ import StarRateIcon from '@mui/icons-material/StarRate';
 import {Delete, ModeEdit} from "@mui/icons-material"
 import { useNavigate } from 'react-router';
 
-const ListLodgeCard = () => {
+const ListLodgeCard = ({data}) => {
 
     const navigate = useNavigate()
 
@@ -25,18 +25,19 @@ const ListLodgeCard = () => {
                 </NumberOfImagesCont>
             </LargeImageCont>
             <SmallImageCont>
-                <SmallImage src={img1}/>
-                <SmallImage src={img1}/>
-                <SmallImage src={img1}/>
+                {
+                    data?.myImages?.map( (item)=> <SmallImage key={item} src={item} />)
+                }
+                {/* <SmallImage src={img1} /> */}
             </SmallImageCont>
         </ImageContainer>
         <DescriptionContainer>
             <LeftItems>
                 <LodgeDesc>
                     <LodgeTitle>
-                        Luxury Self Contained Apartment
+                        {data?.title}
                     </LodgeTitle>
-                    <NameOfLodge>Miracle Lodge, Amsterdam</NameOfLodge>
+                    <NameOfLodge>{data?.location}</NameOfLodge>
                 </LodgeDesc>
                 <LodgeAttraction>
                     <AttractionItems>24hr Electricity</AttractionItems>
@@ -45,8 +46,8 @@ const ListLodgeCard = () => {
                 </LodgeAttraction>
                 <AgentProfileAndDate>
                     <AgentProfile>
-                        <AgentAvatar src={img}/>
-                        <AgentName>Emmyzion Rentage</AgentName>
+                        <AgentAvatar src={data?.agentId?.avatarUrl}/>
+                        <AgentName>{data?.agentId?.firstName} {data?.agentId?.lastName}</AgentName>
                     </AgentProfile>
                     <DatePosted>Updated 23 Dec 2024, Added 06 Nov 2024</DatePosted>
                 </AgentProfileAndDate>
@@ -54,7 +55,7 @@ const ListLodgeCard = () => {
             <RightItems>
                 <TopContainer>
                     <PriceAndDuration>
-                        <Price>N200,000</Price>
+                        <Price>N{data?.price}</Price>
                         <Duration>Annually</Duration>
                     </PriceAndDuration>
                     <LikeAndBookmark>

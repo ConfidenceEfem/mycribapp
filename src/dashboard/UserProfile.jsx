@@ -35,7 +35,7 @@ const UserProfile = () => {
             <DisplayImg src={authUser?.avatarUrl ? authUser?.avatarUrl : img} />
             {isImageUploading && (
               <OverlayForImageLoading>
-                <CircularProgress enableTrackSlot size="20px" color="inherit" />
+                <CircularProgressComp enableTrackSlot size="20px" color="inherit" />
               </OverlayForImageLoading>
             )}
           </ImageAndOverlay>

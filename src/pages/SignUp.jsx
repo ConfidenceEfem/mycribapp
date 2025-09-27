@@ -11,6 +11,7 @@ import { useAuthStore } from "../store/useAuthStore";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import CircularProgress from "@mui/material/CircularProgress";
+import CircularProgressComp from "../components/form/CircularProgressComp";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -167,7 +168,7 @@ const SignUp = () => {
                 </Div>
 
                 <Button
-                  text={isSigningUp ? <CircularProgress /> : "Sign Up"}
+                  text={isSigningUp ? <CircularProgressComp /> : "Sign Up"}
                   disabled={isSigningUp}
                   type="submit"
                 />

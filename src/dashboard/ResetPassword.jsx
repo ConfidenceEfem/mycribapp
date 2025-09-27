@@ -48,6 +48,10 @@ const ResetPassword = () => {
             handleResetPassword(data);
           }}
           validationSchema={schema}
+          initialValues={{
+            newPassword: "",
+            currentPassword: "",
+          }}
         >
           {({
             handleSubmit,
