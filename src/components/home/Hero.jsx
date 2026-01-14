@@ -3,7 +3,9 @@ import { colors } from "../../config/colors"
 import Button from "../Button"
 import img1 from "../../assets/hero1.png"
 import img2 from "../../assets/hero2.png"
+import { useAuthStore } from "../../store/useAuthStore"
 const Hero = () => {
+    const {accessToken} = useAuthStore()
   return (
     <Container>
         <Wrapper>
@@ -12,13 +14,14 @@ const Hero = () => {
                 <SubText>
                     MyCrib connects student with safe, affordable and nearby accomodation. Browse verified listings, book with confidence and move in stress-free.
                 </SubText>
-                <Button text={"Sign Up"}
+                <Button text={accessToken? "View Profile": "Sign Up"}
                 onClick={(e) => {
                     e.preventDefault();
-                    window.location.href = "/signup"
+                    window.location.href = accessToken? "/user-profile":"/signup"
                 }}
                 
                 />
+
             </Content>
             <Picture>       
                 {/* <Frame1> */}

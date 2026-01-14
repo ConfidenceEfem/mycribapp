@@ -2,30 +2,27 @@ import styled from 'styled-components'
 import ListLodgeCard from '../components/cards/ListLodgeCard'
 import SearchComponentOverlay from '../components/home/SearchComponentOverlay'
 import { useAuthStore } from '../store/useAuthStore'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
+import CircularProgressComp from '../components/form/CircularProgressComp'
 
 const Lodges = () => {
 
-  const [allLodge, setAllLodge] = useState([])
 
-  const {isGettingAllLodge, getAllLodges} = useAuthStore()
+  const {getAllLodges, lodges, isGettingAllLodge} = useAuthStore()
 
-useEffect(()=>{
-getAllLodges()
-},[getAllLodges])
+
+  useEffect( ()=>{
+   getAllLodges()
+  }, [getAllLodges])
+
 
   return (
     <Container>
         <SearchComponentOverlay/>
         <Wrapper>
-          {
-            isGettingAllLodge?  <CircularProgress
-                                  enableTrackSlot
-                                  size="20px"
-                                  color="inherit"
-                                /> : 
-        <ListLodgeCard/>
-          }
+              {
+          isGettingAllLodge ? <CircularProgressComp/> : lodges?.length === 0 ? <div>No lodge found</div> : lodges?.map( (item)=> <ListLodgeCard key={item._id} data={item}/>)
+        }
    
         </Wrapper>
     </Container>

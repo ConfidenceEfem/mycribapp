@@ -9,10 +9,11 @@ import { useState } from 'react'
 // import {} from "@mui/icons-material"
 import avatar from "../assets/avatar.png"
 import { useAuthStore } from '../store/useAuthStore'
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const Header = () => {
 
-    const { accessToken, authUser } = useAuthStore()
+    const { accessToken, authUser, logoutUser } = useAuthStore()
 
     const [showSideBar, setShowSideBar] = useState(false)
 
@@ -52,9 +53,18 @@ const Header = () => {
                 accessToken &&
             <>
             <DisplayName>Hello, {authUser?.firstName}</DisplayName>
-            <Profile src={avatar} onClick={()=>{
+            <Profile src={authUser?.avatarUrl? authUser?.avatarUrl : avatar} onClick={()=>{
                 navigate("/user-profile")
             }}/>
+            <LogoutButton
+            onClick={()=>{
+                logoutUser()
+            }}
+            >
+            <LogoutIcon fontSize='8px'/>
+                <span>Logout</span>
+
+            </LogoutButton>
             </>
             }
                 <Hamburger
@@ -72,6 +82,19 @@ const Header = () => {
 
 export default Header
 
+const LogoutButton = styled.div`
+display:flex;
+justify-content: center;
+align-items: center;
+gap: 5px;
+background-color: lightgray;
+padding: 7px 15px;
+border-radius: 5px;
+cursor: pointer;
+span{
+    font-size: 10px;
+}
+`
 
 const Profile = styled.img`
     width: 40px;

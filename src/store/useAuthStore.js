@@ -233,7 +233,11 @@ export const useAuthStore = create(
         try {
           set({isGettingAllLodge: true})
           const res = await axiosInstance.get("/listing")
-          console.log("all lodges data", res?.data)
+            if(res?.data?.data?.length === 0) {
+          set({lodges: []})
+          return []
+        }
+          set({lodges: res?.data?.data})
           return res?.data?.data
         } catch (error) {
             Swal.fire({
@@ -269,6 +273,18 @@ export const useAuthStore = create(
           set({isGettingAllAgents: false})
         }
       },
+      logoutUser: async () => {
+        try {
+            const token = get().accessToken
+          if(!token) throw new Error("No token found")
+          const res = await axiosWithToken(token).post("/auth/logout")
+        console.log(res?.data)
+      set({authUser: null, accessToken: null, refreshToken: null})
+        } catch (error) {
+           set({authUser: null, accessToken: null, refreshToken: null})
+           console.log("error while sending otp", error);
+        }
+      }, 
       resendOTP: async (data) => {
         set({ isResendingOTP: true });
         try {

@@ -5,7 +5,7 @@ import Button from '../Button'
 import {VerifiedRounded,WhatsApp, Phone,} from "@mui/icons-material"
 import styled from "styled-components"
 
-const AgentCard = () => {
+const AgentCard = ({props}) => {
 
     const navigate = useNavigate()
 
@@ -15,15 +15,15 @@ const AgentCard = () => {
         navigate("i")
     }}
     >
-           <Profile src={img}/>
+           <Profile src={props?.avatarUrl? props?.avatarUrl : img}/>
            <Top>
                <Verified>
                    <VerifiedRounded/>
                    </Verified>
            </Top>
            <AgentDetails>
-               <AgentNames>Confidence Efem</AgentNames>
-               <AgentEmail>confidenceefem1@gmail.com</AgentEmail>
+               <AgentNames>{props?.firstName} {props?.lastName}</AgentNames>
+               <AgentEmail>{props?.email}</AgentEmail>
                <SocialIcons>
                    <Icon bg="#00B548">
    
@@ -82,6 +82,7 @@ const Profile = styled.img`
     position: absolute;
     top: -20px;
     left: 40%;
+    object-fit: cover;
 `
 
 const AgentNames = styled.div`

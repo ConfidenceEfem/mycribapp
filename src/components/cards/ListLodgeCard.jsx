@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router';
 const ListLodgeCard = ({data}) => {
 
     const navigate = useNavigate()
+    console.log(data, "from lodge card")
 
   return (
     <Container>

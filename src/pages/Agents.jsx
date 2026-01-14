@@ -9,19 +9,24 @@ const Agents = () => {
 
   const navigate = useNavigate()
 
-  const {isGettingAllAgents, getAllAgents} = useAuthStore()
+  const {isGettingAllAgents, getAllAgents, agents} = useAuthStore()
 
   useEffect(()=>{
     getAllAgents()
   },[getAllAgents])
 
+  console.log(agents)
+
   return (
     <Container>
       <Wrapper>
-        <AgentCard />
-        <AgentCard />
-        <AgentCard />
    
+   {
+     agents?.map((props)=>(
+       <AgentCard props={props}/>
+       
+    ))
+   }
       </Wrapper>
     </Container>
   );
