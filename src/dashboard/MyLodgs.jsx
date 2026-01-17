@@ -7,7 +7,7 @@ import CircularProgressComp from "../components/form/CircularProgressComp";
 const MyLodgs = () => {
 
 
-  const {allLodgesByUser, userListing, isLoadingListings} = useAuthStore()
+  const {allLodgesByUser, userListing, isLoadingListings, isallLodgesByUser} = useAuthStore()
 
   console.log(userListing, "user listing from my lodges page")
   
@@ -20,7 +20,7 @@ useEffect( ()=>{
     <Container>
       <Wrapper>
         {
-          isLoadingListings ? <CircularProgressComp/> : userListing?.length === 0 ? <div>No lodge found</div> : userListing?.map( (item)=> <ListLodgeCard key={item._id} data={item}/>)
+          isallLodgesByUser ? <CircularProgressComp/> : userListing?.length === 0 ? <div>No lodge found</div> : userListing?.map( (item)=> <ListLodgeCard key={item._id} data={item}/>)
         }
       </Wrapper>
     </Container>

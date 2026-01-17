@@ -86,7 +86,7 @@ const ListLodgeCard = ({data}) => {
                         backgroundColor: "rgba(0,0,255,0.7)"
                     }}
                     onClick={()=>{
-                        navigate("/upload-lodges")
+                        navigate(`/edit/${data?._id}`)
                     }}
 
                     >

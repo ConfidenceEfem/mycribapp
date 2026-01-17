@@ -76,7 +76,8 @@ const NavsHolder = styled.div`
 const Container = styled.div`
   width: 300px;
   background-color: black;
-  height: 700px;
+  min-height: 700px;
+  height: auto;
    @media screen and (max-width: 1100px) {
     width: 250px;
   }

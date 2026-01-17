@@ -19,6 +19,7 @@ import AgentDetailedProfile from "./pages/AgentDetailedProfile";
 import Settings from "./dashboard/Settings";
 import ResetPassword from "./dashboard/ResetPassword";
 import PhoneNumberVerification from "./dashboard/PhoneNumberVerification";
+import EditLodge from "./dashboard/EditLodge";
 
 const App = () => {
   return (
@@ -90,6 +91,16 @@ const App = () => {
               <PrivateRoute>
              <DashboardWrapper>
               <PhoneNumberVerification/>
+             </DashboardWrapper>
+               </PrivateRoute>
+            }
+          />
+          <Route
+            path="/edit/:id"
+            element={
+              <PrivateRoute>
+             <DashboardWrapper>
+              <EditLodge/>
              </DashboardWrapper>
                </PrivateRoute>
             }

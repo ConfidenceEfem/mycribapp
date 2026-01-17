@@ -83,6 +83,8 @@ const UserProfile = () => {
                   placeholder={"Email"}
                   defaultValue={authUser?.email}
                   onChange={handleChange("email")}
+                  readOnly
+                
                 />
                 <InputField
                   placeholder={"Phone Number"}

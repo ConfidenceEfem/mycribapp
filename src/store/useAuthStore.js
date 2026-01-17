@@ -22,20 +22,22 @@ export const useAuthStore = create(
       userListing: [],
       agents: [],
       lodges: [], 
+      lodge:{},
       isNewLodgeCreating: false,
       isUserUpdatingData: false,
       isImageUploading: false,
       isallLodgesByUser: false,
       isResettingPassword: false,
       isGettingAllLodge: false,
+      isGettingOneLodge: false,
       isGettingAllAgents: false,
+      isUpdatingLodgeData: false,
 
 
       signup: async (data) => {
         set({ isSigningUp: true });
         try {
           const res = await axiosInstance.post("/auth/signup", data);
-          console.log(res?.data, "sign up data");
           set({ authUser: res?.data?.data });
           return true;
         } catch (error) {
@@ -44,7 +46,7 @@ export const useAuthStore = create(
             icon: "error",
             title: "Oops...",
             text: getErrorMessage(error),
-            timer: 3000,
+            timer: 2000,
             showConfirmButton: false,
           });
         } finally {
@@ -55,7 +57,6 @@ export const useAuthStore = create(
         set({ isLogingin: true });
         try {
           const res = await axiosInstance.post("/auth/login", data);
-          console.log(res?.data, "loging data");
           set({ authUser: res?.data?.data });
           if (res?.data?.data?.token) {
             set({ accessToken: res?.data?.data?.token?.accessToken });
@@ -71,7 +72,7 @@ export const useAuthStore = create(
             icon: "error",
             title: "Oops...",
             text: getErrorMessage(error),
-            timer: 3000,
+            timer: 2000,
             showConfirmButton: false,
           });
         } finally {
@@ -82,7 +83,6 @@ export const useAuthStore = create(
         set({ isVerifyingAccount: true });
         try {
           const res = await axiosInstance.post("/auth/verify-account", data);
-          console.log(res?.data, "verify account data");
           set({ authUser: res?.data?.data });
           if (res?.data?.data?.token) {
             set({ accessToken: res?.data?.data?.token?.accessToken });
@@ -110,13 +110,12 @@ export const useAuthStore = create(
             "/listing/new",
             data
           );
-          console.log(res?.data, "create new lodge data");
           if(res){
             Swal.fire({
               showConfirmButton: false,
               icon: "success",  
               title: "Lodge Created Successfully",
-              timer: 3000,
+              timer: 2000,
             });
           }
         } catch (error) {
@@ -143,7 +142,7 @@ export const useAuthStore = create(
             icon: "error",
             title: "Oops...",
             text: getErrorMessage(error),
-            timer: 3000,
+            timer: 2000,
             showConfirmButton: false,
           });
         } finally {
@@ -165,7 +164,7 @@ export const useAuthStore = create(
             icon: "error",
             title: "Oops...",
             text: getErrorMessage(error),
-            timer: 3000,
+            timer: 2000,
             showConfirmButton: false,
           });
         } finally {
@@ -204,6 +203,37 @@ export const useAuthStore = create(
           set({ isUserUpdatingData: false });
         }
       },
+      updateLodgeData: async (data, id) => {
+        try {
+          set({ isUpdatingLodgeData: true });
+          const token = get().accessToken;
+          console.log("my tokken", token)
+          const res = await axiosWithToken(token).patch(
+            `/listing/${id}`,
+            data
+          );
+
+          if (res) {
+            Swal.fire({
+              showConfirmButton: false,
+              icon: "success",
+              title: "Updated Lodge data Successfully",
+              timer: 1000,
+            });
+          }
+          return true;
+        } catch (error) {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: getErrorMessage(error),
+            timer: 1000,
+            showConfirmButton: false,
+          });
+        } finally {
+          set({ isUpdatingLodgeData: false });
+        }
+      },
       allLodgesByUser: async () => {
         try {
           set({isallLodgesByUser: true})
@@ -217,14 +247,8 @@ export const useAuthStore = create(
         set({userListing: res?.data?.data})
           return res?.data
         } catch (error) {
-          console.log(error, "error while fetching all lodges by user");
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: getErrorMessage(error),
-            timer: 3000,
-            showConfirmButton: false,
-          });
+          console.log(getErrorMessage(error), "error while fetching all lodges by user");
+         
         } finally {
           set({ isallLodgesByUser: false });
         }
@@ -240,17 +264,28 @@ export const useAuthStore = create(
           set({lodges: res?.data?.data})
           return res?.data?.data
         } catch (error) {
-            Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: getErrorMessage(error),
-            timer: 3000,
-            showConfirmButton: false,
-          });
+          console.log(getErrorMessage(error))
         }finally{
           set({isGettingAllLodge: false})
         }
       },
+      getOneLodge: async (id) => {
+        try {
+          set({isGettingOneLodge: true})
+          const res = await axiosInstance.get(`/listing/${id}`)
+            if(res?.data?.data?.length === 0) {
+          set({lodge: []})
+          return []
+        }
+          set({lodge: res?.data?.data})
+          return res?.data?.data
+        } catch (error) {
+          console.log(getErrorMessage(error))
+        }finally{
+          set({isGettingOneLodge: false})
+        }
+      },
+
       getAllAgents: async () => {
         try {
           set({isGettingAllAgents: true})
@@ -262,13 +297,7 @@ export const useAuthStore = create(
           }
           set({agents: res?.data?.data})
         } catch (error) {
-            Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: getErrorMessage(error),
-            timer: 3000,
-            showConfirmButton: false,
-          });
+          console.log(getErrorMessage(error))
         }finally{
           set({isGettingAllAgents: false})
         }
@@ -276,7 +305,6 @@ export const useAuthStore = create(
       logoutUser: async () => {
         try {
             const token = get().accessToken
-          if(!token) throw new Error("No token found")
           const res = await axiosWithToken(token).post("/auth/logout")
         console.log(res?.data)
       set({authUser: null, accessToken: null, refreshToken: null})
