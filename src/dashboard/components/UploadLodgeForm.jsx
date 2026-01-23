@@ -6,8 +6,8 @@ import { colors } from "../../config/colors";
 import ErrorMessage from "../../components/form/ErrorMessage";
 import SelectCheckedTag from "../../components/form/SelectCheckedTag";
 
-const UploadLodgeForm = ({handleSubmit, handleChange, setFieldTouched, errors,touched, isCheckWithRoomate, setIsCheckWithRoomate,isNewLodgeCreating, values}) => {
-  console.log(values["qualities"], "qualities")
+const UploadLodgeForm = ({handleSubmit, handleChange, setFieldTouched, errors,touched, isCheckWithRoomate, setIsCheckWithRoomate,isNewLodgeCreating, values,setFieldValue}) => {
+  console.log(values["withRoomate"], "withRoomate")
     return (
          <FormAndButton onSubmit={handleSubmit}>
               <FormHolder>
@@ -65,6 +65,7 @@ const UploadLodgeForm = ({handleSubmit, handleChange, setFieldTouched, errors,to
                       checked={isCheckWithRoomate}
                       onClick={() => {
                         setIsCheckWithRoomate(!isCheckWithRoomate);
+                        setFieldValue("withRoomate", isCheckWithRoomate)
                       }}
                       value={values?.withRoomate}
                     />
@@ -73,7 +74,8 @@ const UploadLodgeForm = ({handleSubmit, handleChange, setFieldTouched, errors,to
                   <InputField
                     placeholder={"How many roomates"}
                     type={"Number"}
-                    disabled={!values?.withRoomate}
+                    disabled={!isCheckWithRoomate}
+                    onChange={handleChange("numberOfRoomates")}
                   />
                 </Div>
                 <Div>
@@ -123,7 +125,7 @@ const UploadLodgeForm = ({handleSubmit, handleChange, setFieldTouched, errors,to
                   isNewLodgeCreating ? (
                     <CircularProgressComp/>
                   ) : (
-                    "Update Lodge"
+                    "Create Lodge"
                   )
                 }
                 type="submit"

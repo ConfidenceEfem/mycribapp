@@ -51,10 +51,14 @@ const UploadLodge = () => {
   const createNewLodgeFunction = async (data) => {
     const formData = new FormData();
 
-    const { title, description, price, typeOfLodge, location } = data;
+    const { title, description, price, typeOfLodge, location, qualities, withRoomate, numberOfRoomates } = data;
 
     images?.forEach((img)=> {
       formData.append("images", img.file)
+    })
+
+    qualities?.forEach((e)=>{
+      formData.append("qualities[]", e)
     })
 
     formData.append("title", title);
@@ -62,6 +66,8 @@ const UploadLodge = () => {
     formData.append("price", price);
     formData.append("typeOfLodge", typeOfLodge);
     formData.append("location", location);
+    formData.append("withRoomate", withRoomate);
+    formData.append("numberOfRoomates", numberOfRoomates);
     //qualities form data
     //images form data
 
@@ -86,7 +92,7 @@ const UploadLodge = () => {
             price: "",
             location: "",
             withRoomate: isCheckWithRoomate,
-            noOfRoomate: 0,
+            numberOfRoomates: 0,
             typeOfLodge: "",
             qualities: [],
             bio: "",
@@ -104,7 +110,8 @@ const UploadLodge = () => {
             visible,
             errors,
             setFieldTouched,
-            values
+            values,
+            setFieldValue
           }) => (
             <UploadLodgeForm
             errors={errors}
@@ -116,6 +123,7 @@ const UploadLodge = () => {
             touched={touched}
             isNewLodgeCreating={isNewLodgeCreating}
             values={values}
+            setFieldValue={setFieldValue}
             />
           )}
         </Formik>

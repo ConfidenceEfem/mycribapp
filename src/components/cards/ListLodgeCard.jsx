@@ -9,6 +9,7 @@ import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import StarRateIcon from '@mui/icons-material/StarRate';
 import {Delete, ModeEdit} from "@mui/icons-material"
 import { useNavigate } from 'react-router';
+import moment from "moment"
 
 const ListLodgeCard = ({data}) => {
 
@@ -41,16 +42,19 @@ const ListLodgeCard = ({data}) => {
                     <NameOfLodge>{data?.location}</NameOfLodge>
                 </LodgeDesc>
                 <LodgeAttraction>
-                    <AttractionItems>24hr Electricity</AttractionItems>
-                    <AttractionItems>Newly Built</AttractionItems>
-                    <AttractionItems>Security</AttractionItems>
+                    {
+                        data?.qualities?.map((e)=>(
+
+                            <AttractionItems>{e}</AttractionItems>
+                        ))
+                    }
                 </LodgeAttraction>
                 <AgentProfileAndDate>
                     <AgentProfile>
                         <AgentAvatar src={data?.agentId?.avatarUrl}/>
                         <AgentName>{data?.agentId?.firstName} {data?.agentId?.lastName}</AgentName>
                     </AgentProfile>
-                    <DatePosted>Updated 23 Dec 2024, Added 06 Nov 2024</DatePosted>
+                    <DatePosted>Updated {moment(data?.updatedAt).format("DD MMM YYYY")}, Added {moment(data?.createdAt).format("DD MMM YYYY")}</DatePosted>
                 </AgentProfileAndDate>
             </LeftItems>
             <RightItems>

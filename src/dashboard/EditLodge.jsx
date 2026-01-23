@@ -35,6 +35,13 @@ const EditLodge = () => {
    getOneLodge(id)
   }, [getOneLodge])
 
+  
+useEffect(() => {
+  if (typeof lodge?.withRoomate === "boolean") {
+    setIsCheckWithRoomate(lodge?.withRoomate);
+  }
+}, [lodge]);
+
  
   console.log(lodge, "this is lodge data")
 
@@ -51,8 +58,8 @@ const EditLodge = () => {
             title: lodge?.title || "",
             price: lodge?.price || "",
             location:lodge?.location || "",
-            withRoomate: lodge?.withRoomate || isCheckWithRoomate,
-            noOfRoomate: lodge?.numberOfRoomates || 0,
+            withRoomate: isCheckWithRoomate,
+            numberOfRoomates: lodge?.numberOfRoomates || 0,
             typeOfLodge: lodge?.typeOfLodge || "",
             qualities: [],
             bio: lodge?.bio || "",
